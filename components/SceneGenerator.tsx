@@ -100,9 +100,16 @@ export const SceneGenerator: React.FC<SceneGeneratorProps> = ({ credits, onDeduc
     // Pro model check for 2K/4K/Search
     const isProRequired = activeSettings.useSearch || activeSettings.imageSize === "2K" || activeSettings.imageSize === "4K";
     if (!isProRequired) return true;
+
+    // Safety check for standalone deployments
+    if (typeof (window as any).aistudio === 'undefined') {
+      return true;
+    }
+
     try {
-      if (!(await window.aistudio.hasSelectedApiKey())) {
-        await window.aistudio.openSelectKey();
+      const aistudio = (window as any).aistudio;
+      if (!(await aistudio.hasSelectedApiKey())) {
+        await aistudio.openSelectKey();
       }
       return true;
     } catch (e) {

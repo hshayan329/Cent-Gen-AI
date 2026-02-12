@@ -1,20 +1,28 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-/**
- * NEURAL LINK CONFIGURATION
- * Checks both standard process.env (shimmed by Vite) and Vite's native import.meta.env
- */
-const supabaseUrl = process.env.SUPABASE_URL || (import.meta as any).env?.VITE_SUPABASE_URL || 'https://ensamjjjdbcgffwcolhw.supabase.co';
-const supabaseKey = process.env.SUPABASE_ANON_KEY || (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || '';
+// Access variables from either Vite's import.meta.env or process.env (injected by vite.config.ts)
+const getEnv = (key: string) => {
+  return (import.meta as any).env?.[`VITE_${key}`] || 
+         (import.meta as any).env?.[key] || 
+         process.env[key] || 
+         process.env[`VITE_${key}`];
+};
 
-// Create client. If the key is missing, Supabase will throw an error only when a request is made.
-export const supabase = createClient(supabaseUrl, supabaseKey || 'placeholder-key');
+const supabaseUrl = getEnv('SUPABASE_URL');
+const supabaseKey = getEnv('SUPABASE_ANON_KEY');
 
 /**
- * Checks if the Supabase service is fully authenticated and configured.
+ * Checks if the Supabase service is fully configured.
  */
 export const isSupabaseConnected = () => {
-  const key = process.env.SUPABASE_ANON_KEY || (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
-  return !!key && key !== 'placeholder-key' && key !== '';
+  return !!supabaseUrl && !!supabaseKey && supabaseUrl !== '' && supabaseKey !== '';
 };
+
+// Initialize the client. 
+// If keys are missing, we use a placeholder to prevent the app from crashing on load,
+// but we handle the actual errors gracefully in the UI.
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder-project.supabase.co',
+  supabaseKey || 'placeholder-key'
+);

@@ -3,19 +3,18 @@ import { createClient } from '@supabase/supabase-js';
 
 /**
  * NEURAL LINK CONFIGURATION
- * These variables are injected at build-time or runtime.
- * If missing, the application defaults to Local Persistence Mode.
+ * Checks both standard process.env (shimmed by Vite) and Vite's native import.meta.env
  */
-const supabaseUrl = process.env.SUPABASE_URL || 'https://ensamjjjdbcgffwcolhw.supabase.co';
-const supabaseKey = process.env.SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.SUPABASE_URL || (import.meta as any).env?.VITE_SUPABASE_URL || 'https://ensamjjjdbcgffwcolhw.supabase.co';
+const supabaseKey = process.env.SUPABASE_ANON_KEY || (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || '';
 
-// Create client regardless of key presence to avoid breaking hook initializations
-// If key is empty, requests will simply return null/error which App.tsx handles
+// Create client. If the key is missing, Supabase will throw an error only when a request is made.
 export const supabase = createClient(supabaseUrl, supabaseKey || 'placeholder-key');
 
 /**
  * Checks if the Supabase service is fully authenticated and configured.
  */
 export const isSupabaseConnected = () => {
-  return !!supabaseKey && supabaseKey !== 'sb_publishable_placeholder' && supabaseKey !== '';
+  const key = process.env.SUPABASE_ANON_KEY || (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
+  return !!key && key !== 'placeholder-key' && key !== '';
 };

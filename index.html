@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cent Gen | Professional AI Suite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-size-base: 16px;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #020617;
+      color: #f1f5f9;
+      font-size: var(--font-size-base);
+    }
+    .glass {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #a855f7 100%);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .animate-bounce-slow {
+      animation: bounce-slow 6s ease-in-out infinite;
+    }
+
+    /* Professional Print Styles for Ebook PDF Export */
+    @media print {
+      @page {
+        size: A4;
+        margin: 15mm;
+      }
+      html, body {
+        background: white !important;
+        color: black !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      header, nav, footer, .print\:hidden, button, .chat-widget, #chatbot-sidebar {
+        display: none !important;
+      }
+      #root {
+        display: block !important;
+        background: white !important;
+      }
+      .ebook-page {
+        page-break-after: always;
+        break-inside: avoid;
+        display: block !important;
+        margin: 0 0 30mm 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+        color: black !important;
+      }
+      .ebook-page.glass {
+        background: white !important;
+        backdrop-filter: none !important;
+        border: none !important;
+      }
+      .ebook-image {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 8mm;
+        margin-bottom: 10mm;
+        display: block !important;
+      }
+      .ebook-text {
+        color: black !important;
+        font-size: 16pt !important;
+        line-height: 1.6 !important;
+        font-family: serif !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --font-size-base: 14px;
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #020617;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+    
+    .print-only {
+      display: none;
+    }
+  </style>
+  <script>
+    // Environment Shim for Production Deployment stability
+    window.process = window.process || { env: {} };
+  </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom": "https://esm.sh/react-dom@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.48.1"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="./index.tsx"></script>
+</body>
+</html>

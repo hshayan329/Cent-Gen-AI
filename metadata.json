@@ -1,0 +1,7 @@
+{
+  "name": "Cent Gen AI -All in one solution for Creators & Artists ",
+  "description": "A high-end AI image generation tool featuring single prompt and scene-by-scene storyboard creation with advanced quality and resolution controls.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
